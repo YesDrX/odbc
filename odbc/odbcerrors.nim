@@ -92,6 +92,9 @@ import os
 proc debugPrefix: string =
   ## Report the first line number and proc in the call stack outside of the library source.
   let entries = getStackTraceEntries()
+  if entries.len == 0:
+    return ""
+  
   const parentDirectory = currentSourcePath().parentDir
   when not defined(odbcDebug):
     const sourceDirs = [parentDirectory, parentDirectory.parentDir]

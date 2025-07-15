@@ -33,6 +33,7 @@ type
     zkClusterID*:string
     port*:int
     reporting*: ODBCReportState
+    trustServerCertificate*:bool = true
 
 var
   defaultTimeout* = 30
@@ -143,7 +144,8 @@ proc getConnectionString*(con: var ODBCConnection): string =
     params.add("AutoTranslate=Yes")
   else:
     params.add("AutoTranslate=No")
-
+  if con.trustServerCertificate:
+    params.add("TrustServerCertificate=Yes")
 
   result = join(params, ";")
 
